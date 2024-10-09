@@ -19,8 +19,8 @@ const createUser = asyncHandler(async (req, res) => {
         const findUserByEmail = await User.findOne({ email: email });
         const findUserByMobile = await User.findOne({ mobile: mobile });
 
-        const allAvatars = await Avatar.find();
-        const randomProfilePic = lodash.sample(allAvatars);
+        // const allAvatars = await Avatar.find();
+        // const randomProfilePic = lodash.sample(allAvatars);
 
         if (findUserByEmail) {
             return res.json({ code: 404, status: false, message: 'Email address already exists' });
@@ -38,7 +38,7 @@ const createUser = asyncHandler(async (req, res) => {
                 email: req.body.email,
                 mobile: req.body.mobile,
                 password: req.body.password,
-                profilePic: randomProfilePic.url
+                profilePic: 'https://free.clipartof.com/855-Free-Clipart-Of-A-Male-Avatar.jpg'
             });
 
             const result = {
