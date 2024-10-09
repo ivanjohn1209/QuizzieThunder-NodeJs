@@ -40,6 +40,9 @@ const createUser = asyncHandler(async (req, res) => {
                 password: req.body.password,
                 profilePic: 'https://free.clipartof.com/855-Free-Clipart-Of-A-Male-Avatar.jpg'
             });
+            const generatedOtp = otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false, digits: true });
+            await Otp.findOneAndUpdate({ mobile: newUser.mobile }, { otp: generatedOtp, createdAt: new Date() }, { upsert: true });
+
 
             const result = {
                 firstname: newUser.firstname,
@@ -50,14 +53,12 @@ const createUser = asyncHandler(async (req, res) => {
                 profile_pic: newUser.profilePic,
                 createdAt: newUser.createdAt,
                 updatedAt: newUser.updatedAt,
+                generatedOtp: generatedOtp
             };
 
             // Generate OTP and save it to the Otp collection
-            const generatedOtp = otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false, digits: true });
-            await Otp.findOneAndUpdate({ mobile: newUser.mobile }, { otp: generatedOtp, createdAt: new Date() }, { upsert: true });
-
             // Send the OTP to the user's mobile number using sms service
-            sendSMS(`+91${newUser.mobile}`, `Your Quizze Thunder OTP code is: ${generatedOtp}`)
+            sendSMS(`+63${newUser.mobile}`, `Your Quizze Thunder OTP code is: ${generatedOtp}`)
                 .then(message => console.log('OTP sent:', message.sid))
                 .catch(error => console.error('Error sending OTP:', error));
 
