@@ -157,7 +157,7 @@ const loginUser = asyncHandler(async (req, res) => {
                     await Otp.findOneAndUpdate({ mobile: mobile }, { otp: generatedOtp, createdAt: new Date() }, { upsert: true });
 
                     // Send the generatedOtp to the user's mobile number using sms service
-                    sendSMS(`+91${mobile}`, `Your Quizze Thunder OTP code is: ${generatedOtp}`)
+                    sendSMS(`+63${mobile}`, `Your Quizze Thunder OTP code is: ${generatedOtp}`)
                         .then(message => console.log('OTP sent:', message.sid))
                         .catch(error => console.error('Error sending OTP:', error));
 
@@ -427,7 +427,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
             await Otp.findOneAndUpdate({ mobile: user.mobile }, { otp: generatedOtp, createdAt: new Date() }, { upsert: true });
 
             // Send the OTP to the user's mobile number using sms service
-            sendSMS(`+91${user.mobile}`, `Your Quizze Thunder OTP code is: ${generatedOtp}`)
+            sendSMS(`+63${user.mobile}`, `Your Quizze Thunder OTP code is: ${generatedOtp}`)
                 .then(message => console.log('OTP sent:', message.sid))
                 .catch(error => console.error('Error sending OTP:', error));
 

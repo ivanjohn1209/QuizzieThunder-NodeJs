@@ -31,15 +31,15 @@ var userSchema = new mongoose.Schema({
     },
     isMobileNumberVerified: {
         type: Boolean,
-        default: false
+        default: true
     },
     isEmailVerified: {
         type: Boolean,
-        default: false
+        default: true
     },
     isBlocked: {
         type: Boolean,
-        default: false
+        default: true
     },
     about: {
         type: String,
@@ -48,7 +48,7 @@ var userSchema = new mongoose.Schema({
         type: String,
         default: 'https://res.cloudinary.com/dt6hyafmc/image/upload/v1692392344/Avatars/avatar_8609.png',
     }
-}, { timestamps: true, versionKey: false });
+}, { timestamps: true, versionKey: true });
 
 userSchema.pre('save', async function () {
     const salt = await bcrypt.genSaltSync(10);
