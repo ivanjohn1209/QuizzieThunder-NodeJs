@@ -39,7 +39,7 @@ var userSchema = new mongoose.Schema({
     },
     isBlocked: {
         type: Boolean,
-        default: true
+        default: false
     },
     about: {
         type: String,
